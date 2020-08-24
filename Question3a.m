@@ -7,9 +7,6 @@ clc;
 clear;
 clf;
 
-%% NATURAL CONSTANTS
-GM = 3.986e14;  % Standard Gravitational Parameter (m^3/sec^2)
-Re = 6375000;   % Radius of the Earth (m)
 
 %% DECODING TLE DATA
 
@@ -33,9 +30,9 @@ Orbital_Period_Sec = Orbital_Period*24*60*60;
 e = tleMap('Eccentricity');
 
 % Semi-Major Axis
-a = nthroot((Orbital_Period_Sec/(2*pi))^2*GM, 3);
+a = nthroot((Orbital_Period_Sec/(2*pi))^2*NatConst.GM, 3);
 R_Perigee = 2*a/(1+(e+1)/(1-e));
-Alt_Perigee = R_Perigee - Re;
+Alt_Perigee = R_Perigee - NatConst.Re;
 
 R_Apogee = 2*a/(1+(1-e)/(1+e));
 b = sqrt(R_Perigee*R_Apogee);
@@ -73,7 +70,7 @@ r = a*(1-e^2)./(1+e*cos(nu));
 polarplot(nu,r,'r');
 hold on
 grid minor
-polarplot(linspace(0,2*pi,360),Re+zeros(1,360),'k');
+polarplot(linspace(0,2*pi,360),NatConst.Re+zeros(1,360),'k');
 ax = gca;
 ax.RGrid = 'off';
 ax.RTick = [];

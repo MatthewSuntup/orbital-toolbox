@@ -1,14 +1,14 @@
 
-function path = sim(obj)
+function sim(obj)
     %% SIMULATING THE ORBIT - Q1b
     % Generating an array of mean anomaly values
     M = linspace(0, 2*pi, 360);
 
     % Converting these values to true anomaly values
-    nu = mean2true(M, obj.e);
+    nu = mean2true(M, obj.ecc);
 
     % Radial Distance
-    r = obj.a*(1-obj.e^2)./(1+obj.e*cos(nu));
+    r = obj.a*(1-obj.ecc^2)./(1+obj.ecc*cos(nu));
 
     x = r.*cos(nu);
     y = r.*sin(nu);
@@ -33,4 +33,5 @@ function path = sim(obj)
     path.y = y;
     path.err_a = a_percent_error;
     path.err_b = b_percent_error;
+    obj.path = path;
 end

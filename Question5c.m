@@ -5,24 +5,21 @@
 %% SETUP
 clc;
 clear;
+clf;
 
-%% NATURAL CONSTANTS
-GM = 3.986e14;  % Standard Gravitational Parameter (m^3/sec^2)
-Re = 6375000;       % Radius of the Earth (m)
-sidereal_day = 23*60*60 + 56*60 + 4.0916;    % Length of Sideral Day (s)
-
+%%
 T_hours = 14.00;
 T_seconds = T_hours*60*60;
 omega = 2*pi/T_seconds;
 
 % Destination Orbit Radius
-% Using: T^2/R^3 = 4*pi^2/GM;
-r = nthroot((GM*T_seconds^2)/(4*pi^2),3);
-v = sqrt(GM/r); 
-alt = r-Re; 
+% Using: T^2/R^3 = 4*pi^2/NatConst.GM;
+r = nthroot((NatConst.GM*T_seconds^2)/(4*pi^2),3);
+v = sqrt(NatConst.GM/r); 
+alt = r-NatConst.Re; 
 
 % Parking Orbit Radius
-r_init = 300000+Re;
+r_init = 300000+NatConst.Re;
 
 % RAANs of Destination Orbits (and Parking Orbits)
 RAAN_1 = 317;
@@ -51,9 +48,9 @@ raan_long = launch_long - lambda;
 long_diff = raan_long - equinox_long;
 
 % Calculating time since vernal equinox over spaceport (seconds)
-t1 = (RAAN_1-long_diff)/360*sidereal_day;
-t2 = (RAAN_2-long_diff)/360*sidereal_day;
-t3 = (RAAN_3-long_diff)/360*sidereal_day;
+t1 = (RAAN_1-long_diff)/360*NatConst.sidereal_day;
+t2 = (RAAN_2-long_diff)/360*NatConst.sidereal_day;
+t3 = (RAAN_3-long_diff)/360*NatConst.sidereal_day;
 
 equinox_time = datetime('20-Mar-2018 13:14');
 d1 = equinox_time + seconds(t1);
@@ -92,12 +89,12 @@ plotm([land.Lat],[land.Lon],'Color','black')
 hold on
 
 % Plotting the 3 orbits and rotating them appropriately
-MEO1 = plot3m(zeros(1,361),0:360,(r-Re)/1000 + zeros(1,361),'Color','r','LineWidth',3);
+MEO1 = plot3m(zeros(1,361),0:360,(r-NatConst.Re)/1000 + zeros(1,361),'Color','r','LineWidth',3);
 rotate(MEO1, [1 0 0], 56);
 rotate(MEO1, [0 0 1], RAAN_1);
-MEO2 = plot3m(zeros(1,361),0:360,(r-Re)/1000 + zeros(1,361),'Color','b','LineWidth',3);
+MEO2 = plot3m(zeros(1,361),0:360,(r-NatConst.Re)/1000 + zeros(1,361),'Color','b','LineWidth',3);
 rotate(MEO2, [1 0 0], 56);
 rotate(MEO2, [0 0 1], RAAN_2);
-MEO3 = plot3m(zeros(1,361),0:360,(r-Re)/1000 + zeros(1,361),'Color','m','LineWidth',3);
+MEO3 = plot3m(zeros(1,361),0:360,(r-NatConst.Re)/1000 + zeros(1,361),'Color','m','LineWidth',3);
 rotate(MEO3, [1 0 0], 56);
 rotate(MEO1, [0 0 1], RAAN_3);

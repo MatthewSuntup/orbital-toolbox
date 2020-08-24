@@ -15,16 +15,13 @@ clc;
 clear;
 clf;
 
-%% NATURAL CONSTANTS
-GM = 3.986e14;  % Standard Gravitational Parameter (m^3/sec^2)
-Re = 6375000;       % Radius of the Earth (m)
 
 %% SATELLITE CONSTANTS
 Alt = 590000;       % Altitude of Orbit (m)
-Ro = Re + Alt;      % Raidus of Orbit (m)
+Ro = NatConst.Re + Alt;      % Raidus of Orbit (m)
 
 % Angular Velocity of Satellite (degrees/sec)
-omega = sqrt(GM/Ro^3)*180/(pi);
+omega = sqrt(NatConst.GM/Ro^3)*180/(pi);
 
 %% CALCULATIONS
 % Elevation Angles (degrees)
@@ -33,12 +30,12 @@ theta = 5:90;
 % Calculating the angle covered while visible (degrees)
 % (Refer to diagrams and explanations in assignment 2b)
 
-alpha = 85 - asind(Re*sind(95)/Ro);
+alpha = 85 - asind(NatConst.Re*sind(95)/Ro);
 r = Ro*sind(alpha);
 h = r*tand(5);
-gamma = asind(Re*sind(90+theta)/Ro);
+gamma = asind(NatConst.Re*sind(90+theta)/Ro);
 beta = 90 - theta - gamma;
-x = (h+Re)*tand(beta);
+x = (h+NatConst.Re)*tand(beta);
 
 % Note: The real() function fixes an error at boundary condition due to
 % computational errors (likely in conversion between radians and degrees).

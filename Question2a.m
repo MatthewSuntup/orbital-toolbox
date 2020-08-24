@@ -15,21 +15,24 @@
 clc;
 clear;
 clf;
+close all;
 
-%% NATURAL CONSTANTS
-GM = 3.986e14;  % Standard Gravitational Parameter (m^3/sec^2)
-Re = 6375000;       % Radius of the Earth (m)
 
 %% SATELLITE CONSTANTS
+
+% TODO: Use Satellite object here (will need to make it possible to
+% initalisie Satellite objects without TLE, consider removing tle_data and
+% actually store all the appropriate values as properties)
+
 Alt = 590000;       % Altitude of Orbit (m)
-Ro = Re + Alt;      % Raidus of Orbit (m)
+Ro = NatConst.Re + Alt;      % Raidus of Orbit (m)
 
 % Angular Velocity of Satellite (degrees/sec)
-omega = sqrt(GM/Ro^3)*180/(pi);
+omega = sqrt(NatConst.GM/Ro^3)*180/(pi);
 
 %% CALCULATIONS
 % Calculating the angle covered while visible (degrees)
-alpha = 2*(180-95-asind(Re*sind(95)/(Ro)));
+alpha = 2*(180-95-asind(NatConst.Re*sind(95)/(Ro)));
 
 % Length of time the satellite is visible (seconds)
 t = alpha/omega;

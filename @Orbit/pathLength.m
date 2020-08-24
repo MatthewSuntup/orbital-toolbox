@@ -14,7 +14,7 @@ function length = pathLength(obj)
     % The series will continue to iterate until the next value adds less than
     % 100m to the final result. 
     while 2*pi*obj.a*ni > 100
-        ni = 2*pi*obj.a*(symprod(2*k-1,k,1,n)/symprod(2*t,t,1,n))^2*obj.e^(2*n)/(2*n-1);
+        ni = 2*pi*obj.a*(symprod(2*k-1,k,1,n)/symprod(2*t,t,1,n))^2*obj.ecc^(2*n)/(2*n-1);
         sum = sum + ni;
         n = n + 1;
 

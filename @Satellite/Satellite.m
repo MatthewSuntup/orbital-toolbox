@@ -9,27 +9,44 @@ classdef Satellite < handle
     properties
         name;
         tle_data;
+        
+        % Orbit object
         orbit;
-        Launch_Year;
+        
+        % Identifying TLE Properties
+        sat_number;
+        classification;
+        launch_year;
+        launch_num;
+        piece;
+        
+        % Element Set Number of TLE
+        elem_num;
+        
+        % Epoch/Motion TLE Properties
+        epoch_year;
+        epoch_day;
+        der_mot_1;
+        der_mot_2;
+        drag_term;
+        
     end
     
     methods
         % Orbit Class Constructor
-        function obj = Satellite(name, tle_file)
-            
+        function obj = Satellite(name)
             
             % Set satellite name
             obj.name = name;
+            obj.orbit = Orbit();
             
-            % Extract properties and simulate orbit
-            obj.updateProperties(tle_file);
-            obj.orbit = Orbit(obj.tle_data);
         end
         
         % Takes TLE data and updates satellite properties
-        updateProperties(obj, tle_file);
+        updateFromTLE(obj, tle_file);
         plotOrbit(obj);
         printInfo(obj);
+        updateOrbit(obj);
         
         
     end

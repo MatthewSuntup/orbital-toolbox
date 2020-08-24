@@ -11,19 +11,17 @@
 % highest point of its trajectory.
 
 %% SETUP
-close all;
 clc;
 clear;
 clf;
+% close all;
 
 %% NATURAL CONSTANTS
-GM = 3.986 *10^14;          % m^3/sec^2
-R_Earth = 6375000;          % metres
 Alt = 590000;               % metres
-R_Orbit = R_Earth + Alt;    % metres
+R_Orbit = NatConst.Re + Alt;    % metres
 
 %% ORBITAL CONSTANTS
-omega_sat = sqrt(GM/(R_Orbit)^3);   % radians/second
+omega_sat = sqrt(NatConst.GM/(R_Orbit)^3);   % radians/second
 omegad_sat = omega_sat*180/pi;      % degrees/second
 omegad_earth = 7.292115e-5*180/pi;  % degrees/second
 i = 97; % degrees
@@ -33,12 +31,12 @@ lat = -33.86;    % degrees
 lon = 151.20;    % degrees
 
 % Column Vector of the Ground Station's Location in ECEF Co-ordinates
-gnd_station = R_Earth*[cosd(lat)*cosd(lon);cosd(lat)*sind(lon);sind(lat)];
+gnd_station = NatConst.Re*[cosd(lat)*cosd(lon);cosd(lat)*sind(lon);sind(lat)];
 
 %% CONDITIONS FOR VISIBILITY
 % Finding the maximum range
-alpha = asind(R_Earth*sind(95)/(R_Orbit));      % degrees
-Rmax = R_Earth*sind(180-95-alpha)/sind(alpha);  % Rmax = 2304330; % metres
+alpha = asind(NatConst.Re*sind(95)/(R_Orbit));      % degrees
+Rmax = NatConst.Re*sind(180-95-alpha)/sind(alpha);  % Rmax = 2304330; % metres
 
 %% ITERATING THROUGH ALL POSSIBLE ORBITS
 % Time Step
@@ -107,7 +105,7 @@ for OMEGA = 270:1:450
     end
     
     % Calculating the maximum elevation for the given RAAN
-    elev = acosd((R_Earth^2 + rmin^2 - R_Orbit^2)/(2*R_Earth*rmin))-90;
+    elev = acosd((NatConst.Re^2 + rmin^2 - R_Orbit^2)/(2*NatConst.Re*rmin))-90;
     
     % Storing our values into arrays
     Elevation(k) = elev;

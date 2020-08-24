@@ -7,21 +7,16 @@ clc;
 clear;
 clf;
 
-%% NATURAL CONSTANTS
-GM = 3.986e14;  % Standard Gravitational Parameter (m^3/sec^2)
-Re = 6375000;       % Radius of the Earth (m)
-sidereal_day = 23*60*60 + 56*60 + 4.0916;    % Length of Sideral Day (s)
-
 %% SATELLITE PARAMETERS
 % Radius of SSO Orbit
 %r1 = 6960000; % metres
 r1 = (6960314.449135 + 6960132.040373)/2;  % metres
 
 % Period of GEO Orbit (seconds)
-T_geo = sidereal_day;
+T_geo = NatConst.sidereal_day;
 
 % Radius of GEO Orbit (metres)
-r2 = nthroot((GM*T_geo^2)/(4*pi^2),3);
+r2 = nthroot((NatConst.GM*T_geo^2)/(4*pi^2),3);
 
 % Incline Change
 theta = 097.5663;
@@ -52,7 +47,7 @@ rt = a_transfer*(1-e^2)./(1+e*cos(nu));
 %% PLOTTING
 figure(1)
 % Earth
-earth = polarplot(Re+zeros(1,360),'k');
+earth = polarplot(NatConst.Re+zeros(1,360),'k');
 hold on
 % Starting Orbit
 orbit_1 = polarplot(r1+zeros(1,360),'r');
@@ -62,8 +57,8 @@ orbit_2 = polarplot(r2+zeros(1,360),'b');
 orbit_transfer = polarplot(nu,rt,'m');
 hold on
 grid minor
-Re = 6375000;  % metres
-polarplot(linspace(0,2*pi,360),Re+zeros(1,360),'k');
+NatConst.Re = 6375000;  % metres
+polarplot(linspace(0,2*pi,360),NatConst.Re+zeros(1,360),'k');
 
 title('PROBA1 Hohmann Transfer Orbit');
 ax = gca;
@@ -93,12 +88,12 @@ land = shaperead('landareas','UseGeoCoords',true);
 plotm([land.Lat],[land.Lon],'Color','black')
 hold on
 
-orbit1 = plot3m(zeros(1,361),0:360,(r1-Re)/1000 + zeros(1,361),'Color','red','LineWidth',2);
+orbit1 = plot3m(zeros(1,361),0:360,(r1-NatConst.Re)/1000 + zeros(1,361),'Color','red','LineWidth',2);
 rotate(orbit1, [0 0], 97.5663);
 
-orbit2 = plot3m(zeros(1,361),0:360,(r2-Re)/1000 + zeros(1,361),'Color','blue','LineWidth',2);
+orbit2 = plot3m(zeros(1,361),0:360,(r2-NatConst.Re)/1000 + zeros(1,361),'Color','blue','LineWidth',2);
 
-orbit_transfer = plot3m(zeros(1,length(rt(1:180))), nu(1:180)*180/pi ,(rt(1:180)-Re)/1000,'Color','m','LineWidth',2);
+orbit_transfer = plot3m(zeros(1,length(rt(1:180))), nu(1:180)*180/pi ,(rt(1:180)-NatConst.Re)/1000,'Color','m','LineWidth',2);
 rotate(orbit_transfer, [0 0], 97.5663);
 
 legend([orbit1, orbit_transfer, orbit2],'SSO', 'Transfer Orbit', 'GEO','Location','south','Orientation','horizontal');

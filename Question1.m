@@ -9,7 +9,8 @@ clf;
 
 %% DECODING TLE DATA
 tle_file = 'ESA_XMM.tle';
-sat = Satellite('ESA XMM X-Ray Observatory', tle_file);
+sat = Satellite('ESA XMM X-Ray Observatory');
+sat.updateFromTLE(tle_file);
 
 %% OUTPUT
 sat.printInfo();

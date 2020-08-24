@@ -7,15 +7,26 @@
 
 classdef Orbit < handle
     properties
-        Mean_Motion;
-        Orbital_Period;
-        Orbital_Period_Sec;
-        e;
+        % Extractable from TLE
+        inc;
+        right_asc;
+        ecc;
+        ped_arg;
+        mean_anom;
+        mean_mot;
+        epoch_revs;
+
+        % Calculable from TLE
+        period;
+        period_sec;
+        
         a;
         R_Perigee;
         Alt_Perigee;
         R_Apogee;
         b;
+        
+        
         path;
         
         
@@ -23,17 +34,18 @@ classdef Orbit < handle
     
     methods
         % Orbit Class Constructor
-        function obj = Orbit(tleMap)        
+%         function obj = Orbit()        
             % Get orbital parameters
-            obj.updateOrbit(tleMap);
+%             obj.updateOrbit(tleMap);
             
             % Generate cartesion coordinates
-            obj.path = obj.sim();
-        end
+%             obj.path = obj.sim();
+%         end
         
         
         area = pathArea(obj);
         length = pathLength(obj);
+        sim(obj);
         
         
     end
