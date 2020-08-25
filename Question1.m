@@ -14,4 +14,4 @@ sat.updateFromTLE(tle_file);
 
 %% OUTPUT
 sat.printInfo();
-sat.plotOrbit();
+sat.plotOrbit(false);

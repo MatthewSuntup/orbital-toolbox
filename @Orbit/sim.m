@@ -29,9 +29,17 @@ function sim(obj)
     a_percent_error = (obj.a-a_verify)/obj.a*100;
     b_percent_error = (obj.b-b_verify)/obj.b*100;
     
+    % Cartesian Coordinates
     path.x = x;
     path.y = y;
+    
+    % Polar Coordinates
+    path.nu = nu;
+    path.r = r;
+    
+    % Semimajor and semiminor errors
     path.err_a = a_percent_error;
     path.err_b = b_percent_error;
+    
     obj.path = path;
 end

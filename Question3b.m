@@ -1,25 +1,27 @@
-% AER2705 - Space Engineering
-% Assignment 1 - Question 3
-% Author: Matthew Suntup
 
 %% SETUP
 clc;
 clear;
 clf;
 
+%% DECODING TLE DATA
+tle_file = 'ESA_PROBA1.tle';
+sat = Satellite('ESA PROBA1');
+sat.updateFromTLE(tle_file);
+
+
 %% SATELLITE PARAMETERS
-% Radius of SSO Orbit
-%r1 = 6960000; % metres
-r1 = (6960314.449135 + 6960132.040373)/2;  % metres
+% Average orbital radius (assume circular)
+r1 = (sat.orbit.a + sat.orbit.b)/2;
 
 % Period of GEO Orbit (seconds)
-T_geo = NatConst.sidereal_day;
+period_geo = NatConst.sidereal_day;
 
 % Radius of GEO Orbit (metres)
-r2 = nthroot((NatConst.GM*T_geo^2)/(4*pi^2),3);
+r2 = nthroot((NatConst.GM*period_geo^2)/(4*pi^2),3);
 
 % Incline Change
-theta = 097.5663;
+theta = sat.orbit.inc;
 
 % Calculating the magnitude of delta v maneuvres
 [dv1, dv2] = hohmann(r1,r2,theta);
@@ -29,7 +31,7 @@ a_transfer = (r1 + r2)/2;
 
 %% DISPLAY
 fprintf('----------------------------\n');
-fprintf('PROBA1 Orbital Transfer\n');
+fprintf('%s Orbital Transfer\n',sat.name);
 fprintf('----------------------------\n\n');
 fprintf('Delta V at Perigee: %.2f m/s\n',dv1);
 fprintf('Delta V at Apogee:  %.2f m/s\n',dv2);
@@ -60,7 +62,7 @@ grid minor
 NatConst.Re = 6375000;  % metres
 polarplot(linspace(0,2*pi,360),NatConst.Re+zeros(1,360),'k');
 
-title('PROBA1 Hohmann Transfer Orbit');
+title(sprintf('%s Hohmann Transfer Orbit',sat.name));
 ax = gca;
 ax.RGrid = 'off';
 ax.RTick = [];
@@ -69,23 +71,9 @@ ax.GridAlpha = 0.075;
 % text(0,0,'Earth', 'HorizontalAlignment', 'center', 'FontSize', 10, 'FontUnits', 'normalized');
 legend('Earth', 'SSO', 'Transfer Orbit', 'GEO','Location','southoutside','Orientation','horizontal');
 
+
 figure(2)
-% Set a reference ellipsoid the size of the earth
-earth = referenceEllipsoid('earth','km');
-
-% Axis settings to implement reference ellipsoid and aesthetics
-set(gcf,'color','white');
-ax = axesm('globe','Geoid',earth,'Grid','on', 'GLineWidth',0.1,'GLineStyle','-','Gcolor',[0.9 0.9 0.1]);
-ax.Position = [0 0 1 1];
-axis equal off
-
-% Load the image of the earth and show on the axis defined above
-load topo
-geoshow(topo,topolegend,'DisplayType','texturemap')
-
-% Outline the continents
-land = shaperead('landareas','UseGeoCoords',true);
-plotm([land.Lat],[land.Lon],'Color','black')
+plotEarth3D();
 hold on
 
 orbit1 = plot3m(zeros(1,361),0:360,(r1-NatConst.Re)/1000 + zeros(1,361),'Color','red','LineWidth',2);
