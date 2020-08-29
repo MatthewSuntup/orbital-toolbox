@@ -1,5 +1,7 @@
 function [dv1, dv2] = hohmann(r1, r2, theta)
-       
+% Assumes that inclination change (THETA) is instantaneous and done on the
+% second burn.
+
     % Starting Velocity of the Inner Orbit
     v1 = sqrt(NatConst.GM/r1);
 

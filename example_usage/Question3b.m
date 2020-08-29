@@ -3,31 +3,35 @@
 clc;
 clear;
 clf;
+close all;
 
-%% DECODING TLE DATA
+%% Example Usage of hohman()
+% Let's say we're interested in a specific satellite that we have TLE data
+% for, the ESA's PROBA1 satellite. We already know that the orbit for this
+% satellite is approximately circular (e=0.0072) and we're trying to plan a
+% hohmann transfer to a geostationary orbit. 
+
+% We can use a Satellite object to extract the TLE data
 tle_file = 'ESA_PROBA1.tle';
 sat = Satellite('ESA PROBA1');
 sat.updateFromTLE(tle_file);
 
-
-%% SATELLITE PARAMETERS
-% Average orbital radius (assume circular)
+% We'll calculate the average orbital radius from the semi-major and
+% semi-minor axes as we're assuming it's circular
 r1 = (sat.orbit.a + sat.orbit.b)/2;
 
-% Period of GEO Orbit (seconds)
+% A geostationary orbit has a period equal to a sidereal day so we can
+% calculate its radius
 period_geo = NatConst.sidereal_day;
+[v2,r2] = orbitFromPeriod(period_geo);
 
-% Radius of GEO Orbit (metres)
-r2 = nthroot((NatConst.GM*period_geo^2)/(4*pi^2),3);
-
-% Incline Change
+% A geostationary orbit has an inclination of 0, so as part of the homann
+% transfer we want to undergo an inclination change
 theta = sat.orbit.inc;
 
-% Calculating the magnitude of delta v maneuvres
+% Calculate the magnitude of delta v maneuvres using the hohmann() function
 [dv1, dv2] = hohmann(r1,r2,theta);
 
-% Semi-Major Axis of the transfer orbit
-a_transfer = (r1 + r2)/2;
 
 %% DISPLAY
 fprintf('----------------------------\n');
@@ -35,6 +39,12 @@ fprintf('%s Orbital Transfer\n',sat.name);
 fprintf('----------------------------\n\n');
 fprintf('Delta V at Perigee: %.2f m/s\n',dv1);
 fprintf('Delta V at Apogee:  %.2f m/s\n',dv2);
+
+
+
+%%
+% Semi-Major Axis of the transfer orbit
+a_transfer = (r1 + r2)/2;
 
 %% SIMULATING ORBITAL TRANSFER
 M = linspace(0, 2*pi, 360);

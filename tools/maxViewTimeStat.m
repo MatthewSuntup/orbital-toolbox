@@ -5,9 +5,9 @@
 % overhead through the zenith of the ground station, given a minimum
 % viewing angle above the horizon.
 
-% This method does consider the rotation of the Earth, assumes a spherical
-% Earth, and a circular orbit. Hence it does not require information about
-% the viewing location or further orbital details.
+% This method does not consider the rotation of the Earth, assumes a
+% spherical Earth, and a circular orbit. Hence it does not require
+% information about the viewing location or further orbital details.
 
 function t = maxViewTimeStat(Ro, visible_ang)
 

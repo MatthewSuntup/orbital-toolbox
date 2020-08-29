@@ -1,20 +1,20 @@
-% AER2705 - Space Engineering
-% Assignment 1 - Question 5
+
 % Author: Matthew Suntup
 
 %% SETUP
 clc;
 clear;
+clf;
+close all;
 
 
-%% SATELLITE PARAMETERS - Q5a
+%% Example usage of orbitFromPeriod()
 T_hours = 14.00;
 period = T_hours*60*60;
 [v, r] = orbitFromPeriod(period);
 alt = r-NatConst.Re; 
 
-%% CALCULATING LAUNCH AZIMUTH - Q5b
-
+%% Example usage of launchAzimuth()
 
 % Part 2 
 i = 56;
