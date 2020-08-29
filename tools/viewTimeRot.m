@@ -1,14 +1,36 @@
+function [ascension, elevation, t, min_range] = viewTimeRot(Ro, i, visible_ang, loc)
+% [ASCENSION,ELEVATION,T,MIN_RANGE] = VIEWTIME(RO,I,VISIBLE_ANGLE,LOC) will
+% calculate the length of time a satellite in a circular orbit with a given
+% radius and inclination is visible for a given viewing angle above the
+% ascending and descending horizon for a range of maximum elevation angles
+% associated with the highest point of it trajectory. Using an iterative
+% approach.
+%
+%   Inputs:
+%       RO          - orbital radius (m)
+%       I           - orbital inclination (degrees)
+%       VISIBLE_ANG - the minimum viewing angle above the astronomical
+%                     horizon that the observer can see above (degrees)
+%
+%   Outputs:
+%       ASCENSION - an array of RAAN values associated with each pass
+%                   (degrees)
+%       ELEVATION - an array of the maximum elevation angles observed for 
+%                   each RAAN (degrees)
+%       T         - an array of viewing times associated with each RAAN (s)
+%       MIN_RANGE - an array of minimum ranges associated with each RAAN
+%                   (m)
+%
+%   Notes:
+%       Takes into account the rotation of the Earth.
+%       Assumes a circular orbit.
 
-function [ascension, elevation, t, min_range] = viewTimeRot(Ro, visible_angle, loc)
-
-    omegad_earth = 7.292115e-5*180/pi;  % degrees/second
-    i = 97; % degrees
-
+    % Angular velocity of the Earth's surface due to the rotation of the
+    % Earth
+    omegad_earth = rad2deg(2*pi/NatConst.sidereal_day); % degrees/second 
 
     %% ORBITAL CONSTANTS
-    omega_sat = sqrt(NatConst.GM/(Ro)^3);   % radians/second
-    omegad_sat = omega_sat*180/pi;      % degrees/second
-
+    omegad_sat = rad2deg(sqrt(NatConst.GM/(Ro)^3));   % degrees/second
 
     %% GROUND STATION LOCATION
     lat = loc(1);    % degrees
@@ -20,8 +42,8 @@ function [ascension, elevation, t, min_range] = viewTimeRot(Ro, visible_angle, l
     %% CONDITIONS FOR VISIBILITY
     % Finding the maximum range
 
-    alpha = asind(NatConst.Re*sind(90+visible_angle)/(Ro));      % degrees
-    Rmax = NatConst.Re*sind(180-(90+visible_angle)-alpha)/sind(alpha);  % Rmax = 2304330; % metres
+    alpha = asind(NatConst.Re*sind(90+visible_ang)/(Ro));      % degrees
+    Rmax = NatConst.Re*sind(180-(90+visible_ang)-alpha)/sind(alpha);  % Rmax = 2304330; % metres
 
     %% ITERATING THROUGH ALL POSSIBLE ORBITS
     % Time Step
@@ -101,7 +123,4 @@ function [ascension, elevation, t, min_range] = viewTimeRot(Ro, visible_angle, l
 
         k = k + 1;
     end
-
-
-
 end

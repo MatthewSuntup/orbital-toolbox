@@ -18,8 +18,9 @@ alt = r-NatConst.Re;
 
 % Part 2 
 i = 56;
+r_park = 300000+NatConst.Re;
 phi = 5; % French Guiana Space Centre
-azimuth = launchAzimuth(i, phi);
+azimuth = launchAzimuth(i, r_park, phi);
 
 
 %% CALCULATING ORBITAL ENERGIES - Q5de

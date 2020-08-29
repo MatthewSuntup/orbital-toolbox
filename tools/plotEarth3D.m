@@ -1,5 +1,6 @@
-
 function plotEarth3D()
+% PLOTEARTH3D() plots a 3D representation of the earth on the current
+% figure
 
     % Set a reference ellipsoid the size of the earth
     earth = referenceEllipsoid('earth','km');
@@ -17,6 +18,4 @@ function plotEarth3D()
     % Outline the continents
     land = shaperead('landareas','UseGeoCoords',true);
     plotm([land.Lat],[land.Lon],'Color','black')
-   
-
 end

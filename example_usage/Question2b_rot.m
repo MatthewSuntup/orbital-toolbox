@@ -21,13 +21,14 @@ clf;
 % ORBITAL CONSTANTS
 alt = 590000;              % Altitude (metres)
 Ro = NatConst.Re + alt;    % Orbital Radius (metres)
+i = 97;
 
 % GROUND STATION CONSTANTS (Sydney Observatory)
 lat = -33.86;    % degrees
 lon = 151.20;    % degrees
 loc = [lat, lon];
 visible_angle = 5;
-[ascension, elevation, t, min_range] = viewTimeRot(Ro, visible_angle, loc);
+[ascension, elevation, t, min_range] = viewTimeRot(Ro, i, visible_angle, loc);
 
 
 

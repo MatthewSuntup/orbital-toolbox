@@ -1,16 +1,26 @@
-
-% Analytical approach
-
-% This script will calculate the length of time the given LEO satellite is
-% visible for a given viewing angle above the ascending and descending
-% horzion for a range of maximum elevation angles above the eastern or
-% western horizon at the highest point of its trajectory.
-
-% This method does consider the rotation of the Earth, assumes a spherical
-% Earth, and a circular orbit. Hence it does not require information about
-% the viewing location or further orbital details.
-
 function [theta, t] = viewTimeStat(Ro, visible_ang)
+% [THETA,T] = VIEWTIMESTAT(RO,VISIBLE_ANG) will calculate the length of
+% time a satellite in a circular orbit with a given radius is visible for a
+% given viewing angle above the ascending and descending horizon for a
+% range of maximum elevation angles associated with the highest point of it
+% trajectory. Using an analytical approach.
+%
+%   Inputs:
+%       RO          - orbital radius (m)
+%       VISIBLE_ANG - the minimum viewing angle above the astronomical
+%                     horizon that the observer can see above (degrees)
+%
+%   Outputs:
+%       THETA	- an array of maximum elevation angles
+%     	T       - an array of viewing times associated with each angle (s)
+%
+%   Notes:
+%       The rotation of the earth is not considered.
+%       Assumes a spherical earth.
+%       Assumes a circular orbit.
+%       Does not require information about the observer's location or
+%       further orbital details (such as inclination).
+
     % Angular Velocity of Satellite (degrees/sec)
     omega = sqrt(NatConst.GM/Ro^3)*180/(pi);
 
@@ -18,8 +28,6 @@ function [theta, t] = viewTimeStat(Ro, visible_ang)
     theta = 0:90;
 
     % Calculating the angle covered while visible (degrees)
-    % (Refer to diagrams and explanations in assignment 2b)
-
     alpha = (90-visible_ang) - asind(NatConst.Re*sind(90+visible_ang)/Ro);
     r = Ro*sind(alpha);
     h = r*tand(visible_ang);
@@ -34,5 +42,4 @@ function [theta, t] = viewTimeStat(Ro, visible_ang)
 
     % Length of time the satellite is visible (seconds)
     t = phi/omega;
-
 end

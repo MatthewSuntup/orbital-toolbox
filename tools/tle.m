@@ -1,6 +1,6 @@
 function tleMap = tle(Line_1, Line_2)
 % TLE Two line element decoder
-%   MAP = TLE(Line_1, Line_2) returns a map with a key and value for each
+%   MAP = TLE(LINE_1, LINE_2) returns a map with a key and value for each
 %   element in the two line element set.
 %
 %   The keys and their return types:
@@ -57,6 +57,4 @@ function tleMap = tle(Line_1, Line_2)
     tleMap('Mean_Motion') = str2double(Line_2(53:63));
     tleMap('Epoch_Revolutions') = str2double(Line_2(64:68));
     tleMap('Check_Sum_2') = str2double(Line_2(69));
-    
-
 end
