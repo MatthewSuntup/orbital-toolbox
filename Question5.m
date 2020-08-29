@@ -9,35 +9,17 @@ clear;
 
 %% SATELLITE PARAMETERS - Q5a
 T_hours = 14.00;
-T_seconds = T_hours*60*60;
-omega = 2*pi/T_seconds;
-
-% Using: T^2/R^3 = 4*pi^2/NatConst.GM;
-r = nthroot((NatConst.GM*T_seconds^2)/(4*pi^2),3);
-v = sqrt(NatConst.GM/r); 
-
+period = T_hours*60*60;
+[v, r] = orbitFromPeriod(period);
 alt = r-NatConst.Re; 
 
 %% CALCULATING LAUNCH AZIMUTH - Q5b
+
+
 % Part 2 
 i = 56;
-phi = 5;
-inert_azimuth = asind(cosd(i)/cosd(phi));   % (answer for non-rotating earth)
-
-v_orbit = 7730;
-T_rot = 86164.09;
-v_eqrot = 2*pi*NatConst.Re/T_rot;
-
-vx_rot = v_orbit*sind(inert_azimuth)-v_eqrot*cosd(phi);
-vy_rot = v_orbit*cosd(inert_azimuth);
-
-azimuth = atand(vx_rot/vy_rot);
-
-%% DESTINATION RAANs - Q5c
-% Part 3
-RAAN_1 = 317;
-RAAN_2 = mod(RAAN_1 + 120, 360);
-RAAN_3 = mod(RAAN_2 + 120, 360);
+phi = 5; % French Guiana Space Centre
+azimuth = launchAzimuth(i, phi);
 
 
 %% CALCULATING ORBITAL ENERGIES - Q5de
