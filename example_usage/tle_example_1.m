@@ -4,12 +4,12 @@ clear;
 clf;
 close all;
 
-%% DECODING TLE DATA
+%% Example Usage of Satellite.updateFromTLE()
 tle_file = 'ESA_XMM.tle';
 sat = Satellite('ESA XMM X-Ray Observatory');
 sat.updateFromTLE(tle_file);
 
-%% OUTPUT
+%% Display (Cartesian Plot)
 sat.printInfo();
 sat.orbit.plotOrbit(false);
 title(sprintf('%s Orbit',sat.name));

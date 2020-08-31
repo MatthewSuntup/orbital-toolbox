@@ -21,7 +21,7 @@ Ro = NatConst.Re + alt; % Radius of Orbit (m)
 % Calculate elevation angles and max viewing time
 [theta, t] = viewTimeStat(Ro, visible_ang);
 
-%% PLOTTING
+%% Plotting
 plot(theta,t);
 title('Time vs. Elevation');
 xlabel('Elevation (degrees)');

@@ -11,13 +11,17 @@
 ## About
 A collection of MATLAB functions and classes to provide basic orbital analysis capabilities. This toolbox is intended for users seeking quick and easy calculations which may act as a starting point for mission planning, however, various assumptions render this toolbox insufficient for comprehensive mission design and analysis.
 
-This README outlines some of the key features and methodologies implemented in this toolbox. Specific documentation and assumptions are outlined in the relevant function documentation found in the source code or by using the MATLAB `help` command.
+This README outlines some of the key features and methodologies implemented in this toolbox. Specific documentation and assumptions are outlined in the relevant function documentation found in the source code or by using the MATLAB `help` command. For examples of various use cases see the `example_usage` directory.
 
 This toolbox is based on code originally developed for a University of Sydney assignment in the [Space Engineering 1 course (2017 Semester 2)](https://www.sydney.edu.au/courses/units-of-study/2020/aero/aero2705.html). The code has since been refactored for use in more general cases, while some of the original tasks are still shown as example usage.
 
 ### Contents
 - [About](#About)
 - [Features](#Features)
+  - [TLE Analysis and Orbital Parameters](#TLE-Analysis-and-Orbital-Parameters)
+  - [Ground Station Visibility Analysis](#Ground-Station-Visibility-Analysis)
+  - [Hohmann Transfers](#Hohmann-Transfers)
+  - [Launch Requirements](#Launch-Requirements)
 - [Lessons](#Lessons)
 - [Credit](#Credit)
 - [Disclaimer](#Disclaimer)
@@ -100,11 +104,13 @@ The `Orbit.pathArea()` method simply calculates the area of the orbit using:
 where <img src="https://render.githubusercontent.com/render/math?math=a"> is the semi-major axis and <img src="https://render.githubusercontent.com/render/math?math=b"> is the semi-minor axis.
 
 #### Orbit Length
-The `Orbit.pathLength()` method approximates the line integral of an ellipse to find the length of the orbit. The path length is given by:
+The `Orbit.pathLength()` method approximates the line integral of an ellipse to find the length of the orbit. [The path length is given by](http://web.archive.org/web/20180219135426/http://pages.pacificcoast.net/~cazelais/250a/ellipse-length.pdf):
 
 <p align = center>
 <img src="https://render.githubusercontent.com/render/math?math=p=4a\int_{0}^{\frac{\pi}{2}}\sqrt{1-e^2\cos^2(\theta)}d\theta  ">
 </p>
+
+where <img src="https://render.githubusercontent.com/render/math?math=e"> is the eccentricity of the orbit.
 
 In order to evaluate this computationally, the formula implemented in this toolbox is:
 

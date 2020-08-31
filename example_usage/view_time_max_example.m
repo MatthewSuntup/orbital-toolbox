@@ -20,4 +20,6 @@ Ro = NatConst.Re + alt;     % Radius of Orbit (m)
 
 % Calculate the maximum viewing time
 t = maxViewTimeStat(Ro, visible_ang); % (seconds)
+
+%% Display
 fprintf('\nTime of Visibility: %.2f seconds\n',t);

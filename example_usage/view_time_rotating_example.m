@@ -29,12 +29,12 @@ loc = [lat, lon];
 
 [ascension, elevation, t, min_range] = viewTimeRot(Ro, i, visible_ang, loc);
 
-%% DISPLAY
+%% Display
 fprintf('Time of Visibility (Zenith Pass): %.1f seconds\n\n', max(t));
 fprintf('Corresponding range: %.1f metres\n', min(min_range));
 fprintf('Expected range for this pass: %.1f metres\n', alt);
 
-%% PLOTTING
+%% Plotting
 % Plot relationship between viwing time and elevation
 figure();
 plot(elevation(t>0),t(t>0));

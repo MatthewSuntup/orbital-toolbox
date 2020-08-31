@@ -31,7 +31,7 @@ theta = sat.orbit.inc;
 % Calculate the magnitude of delta v maneuvres using the hohmann() function
 [dv1, dv2] = hohmann(r1,r2,theta);
 
-%% DISPLAY
+%% Display
 fprintf('----------------------------\n');
 fprintf('%s Orbital Transfer\n',sat.name);
 fprintf('----------------------------\n\n');
@@ -48,7 +48,7 @@ transfer_orbit.a = (r1+r2)/2;
 transfer_orbit.ecc = (r2 - r1)/(r2 + r1);
 transfer_orbit.sim();
 
-%% PLOTTING 2D Orbits
+%% Plotting 2D Orbits
 figure(1)
 
 % Earth
