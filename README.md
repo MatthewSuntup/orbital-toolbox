@@ -15,10 +15,17 @@ This README outlines some of the key features and methodologies implemented in t
 
 This toolbox is based on code originally developed for a University of Sydney assignment in the [Space Engineering 1 course (2017 Semester 2)](https://www.sydney.edu.au/courses/units-of-study/2020/aero/aero2705.html). The code has since been refactored for use in more general cases, while some of the original tasks are still shown as example usage.
 
+### Contents
+- [About](#About)
+- [Features](#Features)
+- [Lessons](#Lessons)
+- [Credit](#Credit)
+- [Disclaimer](#Disclaimer)
+
 ## Features
 ### TLE Analysis and Orbital Parameters
-#### TLE Extraction
-The `tle(line_1, line_2)` function takes two strings corresponding to the first and second line of a two-line-element (TLE) set and returns a map of key-value pairs for each element. The toolbox provides a `Satellite` class with the method `Satellite.updateFromTLE(tle_file)` which utilises this function and then stores the map data into properties of the `Satellite` object.
+#### TLE Parsing
+The `tle(line_1, line_2)` function takes two strings corresponding to the first and second line of a [two-line element (TLE)](https://spaceflight.nasa.gov/realdata/sightings/SSapplications/Post/JavaSSOP/SSOP_Help/tle_def.html) set and returns a map of key-value pairs for each element. The toolbox provides a `Satellite` class with the method `Satellite.updateFromTLE(tle_file)` which utilises this function and then stores the map data into properties of the `Satellite` object.
 
 #### Orbital Parameters from TLE
 Additional orbital parameters may be calculated from the TLE data using the `Satellite.updateOrbit()` method of a `Satellite` object. This method will analytically determine the following values, using the formulae outlined here:
@@ -27,18 +34,21 @@ Additional orbital parameters may be calculated from the TLE data using the `Sat
 <p align = center>
 <img src="https://render.githubusercontent.com/render/math?math=T=1/n">
 </p>
+
 where <img src="https://render.githubusercontent.com/render/math?math=n"> is the mean motion.
 
 ##### Semi-major axis
 <p align = center>
 <img src="https://render.githubusercontent.com/render/math?math=a=\sqrt[3]{(\frac{T}{2\pi})^2GM}">
 </p>
+
 where <img src="https://render.githubusercontent.com/render/math?math=T"> is the period, <img src="https://render.githubusercontent.com/render/math?math=G"> is the gravitational constant, and <img src="https://render.githubusercontent.com/render/math?math=M"> is the mass of the Earth.
 
 ##### Radius of perigee
 <p align = center>
 <img src="https://render.githubusercontent.com/render/math?math=R_p=a(1-e)">
 </p>
+
 where <img src="https://render.githubusercontent.com/render/math?math=a"> is the semi-major axis, and <img src="https://render.githubusercontent.com/render/math?math=e"> is the eccentricity.
 
 ##### Radius of apogee
@@ -46,6 +56,7 @@ where <img src="https://render.githubusercontent.com/render/math?math=a"> is the
 <p align = center>
 <img src="https://render.githubusercontent.com/render/math?math=R_a=2a-R_p">
 </p>
+
 where <img src="https://render.githubusercontent.com/render/math?math=a"> is the semi-major axis, and <img src="https://render.githubusercontent.com/render/math?math=R_p"> is the radius of perigee.
 
 ##### Semi-minor axis
@@ -53,8 +64,8 @@ where <img src="https://render.githubusercontent.com/render/math?math=a"> is the
 <img src="https://render.githubusercontent.com/render/math?math=b=\sqrt{R_aR_p}">
 </p>
 <p>
+
 where <img src="https://render.githubusercontent.com/render/math?math=R_a"> is the radius of apogee and <img src="https://render.githubusercontent.com/render/math?math=R_p"> is the radius of perigee.
-</p>
 
 These values are stored in an `Orbit` object which is a property of the `Satellite`. Once these parameters have been a calculated, an [Orbital Simulation](#Orbital-Simulation) is also run.
 
@@ -62,6 +73,7 @@ These values are stored in an `Orbit` object which is a property of the `Satelli
 The `Orbit.sim()` method is provided by the `Orbit` class and generates an array of mean anomaly values, true anomaly values, radial distances, and cartesian coordinates, corresponding to a complete orbit. The data may be used for further analysis, polar plotting, or cartesian plotting. The method performs the following calculation:
 - Generate an array of linearly spaced mean anomaly values
 - Convert these values to eccentric anomaly vales using the Newton-Raphson method to solve Kepler's equation:
+
 <p align = center>
 <img src="https://render.githubusercontent.com/render/math?math=M=E-e\sin(E)">
 </p>
@@ -91,19 +103,20 @@ where <img src="https://render.githubusercontent.com/render/math?math=a"> is the
 The `Orbit.pathLength()` method approximates the line integral of an ellipse to find the length of the orbit. The path length is given by:
 
 <p align = center>
-<img src="https://render.githubusercontent.com/render/math?math=p=4a\int_{0}^{\frac{\pi}{2}}\sqrt{1-\varepsilon^2\cos^2(\theta)}d\theta  ">
+<img src="https://render.githubusercontent.com/render/math?math=p=4a\int_{0}^{\frac{\pi}{2}}\sqrt{1-e^2\cos^2(\theta)}d\theta  ">
 </p>
 
 In order to evaluate this computationally, the formula implemented in this toolbox is:
+
 <p align = center>
-<img src="https://render.githubusercontent.com/render/math?math=p=2\pi a\big( 1-\sum_{n=1}^{\infty}\big[(\frac{1\cdot3\cdot5...(2n-1)}{2\cdot4\cdot6...2n})^2 \frac{\varepsilon^{2n}}{2n-1}\big]\big)">
+<img src="https://render.githubusercontent.com/render/math?math=p=2\pi a\big( 1-\sum_{n=1}^{\infty}\big[(\frac{1\cdot3\cdot5...(2n-1)}{2\cdot4\cdot6...2n})^2 \frac{e^{2n}}{2n-1}\big]\big)">
 </p>
 
 The program will continue to loop until the increment added by the successive term is less than 100m, as the error at this point will be less than that associated with the semi-major axis.
 
 ### Ground Station Visibility Analysis
 #### Visibility using only orbital radius and viewing angle
-The `maxViewTimeStat(Ro, visible_ang)` function will calculate the maximum length of time a satellite in a circular orbit will be visible from the ground when passing directly overhead through the zenith of the observer, given a minimum viewing above the astronomical horizon. By assuming a circular orbit, spherical Earth, and stationary (non-rotating) Earth, it is possible to calculate this analytically using only the orbital radius and viewing angle.
+The `maxViewTimeStat(Ro, visible_ang)` function will calculate the maximum length of time a satellite in a circular orbit will be visible from the ground when passing directly overhead through the zenith of the observer, given a minimum viewing above the astronomical horizon. By assuming a circular orbit, [spherical Earth](https://en.wikipedia.org/wiki/Figure_of_the_Earth), and stationary (non-rotating) Earth, it is possible to calculate this analytically using only the orbital radius and viewing angle (in the following diagrams the viewing angle is noted as being 5°, however, the illustration is exaggerated).
 
 <p align = center>
 <img src="img/max_visibility_diagram.png?raw=true" height="380">
@@ -134,11 +147,11 @@ An example of the results obtained for an observer standing at Sydney Observator
 <img src="img/visibility_graph_rotating.png?raw=true" height="400">
 </p>
 
-Note that when the rotation of the Earth is considered, the time of visibility is shorter (612.5 seconds at 90° elevation in comparison to the previous 618.5°). Additionally, there is an asymmetry between elevations on the east side of the zenith and the west side (seen in the offset blue line).
+Note that when the rotation of the Earth is considered, the time of visibility is shorter (612.5 seconds at 90° elevation in comparison to the previous 618.5 seconds). Additionally, there is an asymmetry between elevations on the east side of the zenith and the west side (seen in the offset blue line).
 
 ### Hohmann Transfers
 #### Calculating required delta-V
-The `hohmann(r1, r2, theta)` function calculates the required changes in velocity at the perigee and apogee of a transfer orbit for a Hohmann transfer between two circular orbits. The calculations used by this function assume that the burns are instantaneous, and that the eccentricities of the starting and final orbits are 0. Additionally, it is assumed that the inclination change is to occur entirely as part of the second burn, so the second burn is effectively a vector sum of a burn to circularise the orbit and a burn to change the inclination.
+The `hohmann(r1, r2, theta)` function calculates the required changes in velocity at the perigee and apogee of a transfer orbit for a [Hohmann transfer](https://en.wikipedia.org/wiki/Hohmann_transfer_orbit) between two circular orbits. The calculations used by this function assume that the burns are instantaneous, and that the eccentricities of the starting and final orbits are 0. Additionally, it is assumed that the inclination change is to occur entirely as part of the second burn, so the second burn is effectively a vector sum of a burn to circularise the orbit and a burn to change the inclination.
 
 The semi-major axis of the transfer orbit is given by:
 
@@ -220,6 +233,9 @@ in the ECI reference frame, we take Earth's rotation to be one sidereal day, and
 where <img src="https://render.githubusercontent.com/render/math?math=t_{sidereal}"> is the length of time in a sidereal day. This time is then added to the time of the March Equinox ([in 2020, this occurred at 03:48 on the 20th of March (UTC)](https://www.timeanddate.com/worldclock/sunearth.html?iso=20200320T0348)).
 
 For example, if we want to launch into an orbit with a 56° inclination, 300km altitude, and RAAN of 317°, from the Guiana Space Centre, this function tells us that the first available time after the 2020 March Equinox to do so will be on the same day at 12:59:39 (UTC).
+
+## Lessons
+When I originally developed much of this code in 2017, I researched the relevant space engineering concepts and gained a fundamental understanding of the orbital dynamics associated with the functionality of this toolbox. Returning to this project in 2020, to refactor and develop it into something more re-usable, gave me a welcome refresher on fundamental orbital dynamics and MATLAB programming.
 
 ## Credit
 Thank you to the University of Sydney for the original task specifications which inspired the creation of this toolbox, and to my classmates who kept me going through all the late nights while working on this originally.
