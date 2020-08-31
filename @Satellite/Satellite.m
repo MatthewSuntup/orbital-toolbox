@@ -1,52 +1,45 @@
-
 % Class Description:
-%   Class used to store Satellite details.
+%   The Satellite class is used to store details of a satellite, generally
+%   from TLE data.
 %
-% Properties:
-%   
+%   See reference page for properties and methods.
 
 classdef Satellite < handle
     properties
-        name;
-        tle_data;
+        name;       % Name
+        tle_data;   % TLE map
         
-        % Orbit object
-        orbit;
+        orbit;      % Orbit object
         
-        % Identifying TLE Properties
-        sat_number;
-        classification;
-        launch_year;
-        launch_num;
-        piece;
+        sat_number;   	% Satellite number
+        classification;	% Classification
+        launch_year;	% Launch year
+        launch_num;     % Launch number
+        piece;          % Piece designator
+
+        elem_num;   % Element Set Number of TLE
         
-        % Element Set Number of TLE
-        elem_num;
-        
-        % Epoch/Motion TLE Properties
-        epoch_year;
-        epoch_day;
-        der_mot_1;
-        der_mot_2;
-        drag_term;
-        
+        epoch_year; % Epoch year
+        epoch_day;  % Epoch day
+        der_mot_1;  % 1st derivative of mean motion
+        der_mot_2;  % 2nd derivative of mean motion
+        drag_term;  % Drag term
     end
     
     methods
-        % Orbit Class Constructor
+        % Satellite Class Constructor
         function obj = Satellite(name)
-            
-            % Set satellite name
             obj.name = name;
             obj.orbit = Orbit();
-            
         end
         
+        % Simple print function for basic Satellite info
+        printInfo(obj);
+
         % Takes TLE data and updates satellite properties
         updateFromTLE(obj, tle_file);
-        printInfo(obj);
+
+        % Generate orbital parameters and simulate from TLE data
         updateOrbit(obj);
-        
-        
     end
 end
