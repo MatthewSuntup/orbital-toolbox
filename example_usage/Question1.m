@@ -1,11 +1,8 @@
-% Example Usage
-% Author: Matthew Suntup
-
 %% SETUP
 clc;
 clear;
 clf;
-% close all;
+close all;
 
 %% DECODING TLE DATA
 tle_file = 'ESA_XMM.tle';
@@ -14,4 +11,5 @@ sat.updateFromTLE(tle_file);
 
 %% OUTPUT
 sat.printInfo();
-sat.plotOrbit(false);
+sat.orbit.plotOrbit(false);
+title(sprintf('%s Orbit',sat.name));

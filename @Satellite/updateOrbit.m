@@ -1,16 +1,10 @@
-%
-% Function Syntax: Orbit.updateOrbit()
-%
-% Function Description: 
-% 
-% Inputs:
-% % obj - the Orbit object
+function updateOrbit(obj)
+% UPDATEORBIT(OBJ) uses the data stored to the Satellite object from a
+% previous call to updateFromTLE() and calculates additional orbital
+% parameters. Results are stored in an Orbit object within the Satellite
+% object.
 %
 % In Class: Satellite
-%
-
-function updateOrbit(obj)
-
 
     % Calculating orbital period
     obj.orbit.period = 1/obj.orbit.mean_mot;
@@ -29,6 +23,6 @@ function updateOrbit(obj)
     % Semi-Minor Axis
     obj.orbit.b = sqrt(obj.orbit.R_Perigee*obj.orbit.R_Apogee);
     
+    % Run simulation generating orbit path
     obj.orbit.sim();
-    
 end

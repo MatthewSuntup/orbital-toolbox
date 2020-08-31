@@ -1,5 +1,13 @@
-
 function updateFromTLE(obj, tle_file)
+% UPDATEFROMTLE(OBJ) extracts two-line element (TLE) set data from a text
+% file and stores the information in the relevant fields of the Satellite
+% object.
+%
+% In Class: Satellite
+%
+%   Inputs:
+%       tle_file - the file name of the text file containing the TLE data
+
     %% TLE Data Extraction
     % Open TLE file and read lines
     fid = fopen(tle_file,'r');
@@ -7,13 +15,12 @@ function updateFromTLE(obj, tle_file)
     Line_2 = fgetl(fid);
     fclose(fid);
     
-    % tle function  returns a map with a key and value for each element in the
-    % two line element set.
+    % tle function  returns a map with a key and value for each element in
+    % the TLE set.
     tle_data = tle(Line_1, Line_2);
     obj.tle_data = tle_data;
     
     %% Updating Satellite Properties
-    
     % Identifying Properties
     obj.sat_number = tle_data('Satellite_Number');
     obj.classification = tle_data('Classification');
@@ -48,5 +55,4 @@ function updateFromTLE(obj, tle_file)
     
     % Calculate additional orbital properties
     obj.updateOrbit();
-    
 end

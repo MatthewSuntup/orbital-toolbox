@@ -1,6 +1,3 @@
-% Example Usage
-% Author: Matthew Suntup
-
 %% SETUP
 clc;
 clear;
@@ -14,6 +11,5 @@ sat.updateFromTLE(tle_file);
 
 %% OUTPUT
 sat.printInfo();
-figure();
-sat.plotOrbit(true);
-
+sat.orbit.plotOrbit(true);
+title(sprintf('%s Orbit',sat.name));

@@ -46,6 +46,7 @@ classdef Orbit < handle
         area = pathArea(obj);
         length = pathLength(obj);
         sim(obj);
+        plotOrbit(obj, pol);
         
         
     end

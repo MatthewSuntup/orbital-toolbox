@@ -44,7 +44,6 @@ classdef Satellite < handle
         
         % Takes TLE data and updates satellite properties
         updateFromTLE(obj, tle_file);
-        plotOrbit(obj, pol);
         printInfo(obj);
         updateOrbit(obj);
         

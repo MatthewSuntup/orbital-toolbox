@@ -1,4 +1,3 @@
-
 %% SETUP
 clc;
 clear;
@@ -11,7 +10,7 @@ close all;
 % an observer on the ground and the length of time it is visible to that
 % observer.
 
-% Define a minimum angle below which we aren't able to see the satellite
+% Define a minimum angle, below which we aren't able to see the satellite
 % due to landscape features such as trees or buildings.
 visible_ang = 5;    % degrees
 
@@ -22,10 +21,8 @@ Ro = NatConst.Re + alt; % Radius of Orbit (m)
 % Calculate elevation angles and max viewing time
 [theta, t] = viewTimeStat(Ro, visible_ang);
 
-
 %% PLOTTING
 plot(theta,t);
-
 title('Time vs. Elevation');
 xlabel('Elevation (degrees)');
 ylabel('Time Visible (seconds)');

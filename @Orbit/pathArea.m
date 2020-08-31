@@ -1,6 +1,10 @@
-
 function area = pathArea(obj)
+% AREA = PATHAREA(OBJ) calculates the area of a given orbit.
+%
+% In Class: Orbit
+%
+%   Outputs:
+%       area - the area of the orbit (m^2)
 
-    area = (obj.a/1000)*(obj.b/1000)*pi;  % kilometres^2
-
+    area = obj.a*obj.b*pi;  % m^2
 end

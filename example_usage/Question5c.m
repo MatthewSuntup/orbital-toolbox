@@ -1,5 +1,3 @@
-% Author: Matthew Suntup
-
 %% SETUP
 clc;
 clear;
@@ -39,15 +37,17 @@ fprintf('Delta V at Apogee:  %.2f m/s\n\n',dv2);
 RAAN = 317;
 i = 56;
 
-% Launch site location (French Guiana Space Centre)
+% Calculate the orbital radius from the provided altitude
+alt = 300000;           % Altitude of Orbit (m)
+r = NatConst.Re + alt;  % Radius of Orbit (m)
+
+% Launch site location (Guiana Space Centre)
 lat = 5.305;      
 lon = 360 - 52.834;
 loc = [lat, lon];
 
 % Launch time (Coordinated Universal Time)
-launch_time = launchTime(RAAN, i, loc);
+launch_time = launchTime(RAAN, i, r, loc);
 
 % Display
 fprintf('Launch Time: %s (UTC)\n', launch_time);
-
-

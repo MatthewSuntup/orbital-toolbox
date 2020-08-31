@@ -1,6 +1,6 @@
 function [v,r] = orbitFromPeriod(period)
 % [V,R] = ORBITFROMPERIOD(PERIOD) calculates the orbital velocity and
-% radius from a given period.
+% radius of a circular orbit with a given period.
 %
 %   Input:
 %       PERIOD - orbital period (seconds)

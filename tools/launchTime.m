@@ -1,4 +1,4 @@
-function launch_time = launchTime(RAAN, i, loc)
+function launch_time = launchTime(RAAN, i, r, loc)
 % LAUNCH_TIME = LAUNCHTIME(RAAN,I,LOC) calculates a possible launch time in
 % order to launch directly into an orbit with a given inclination and RAAN
 % from a given launch location. This assumes an appropriate launch azimuth
@@ -24,7 +24,7 @@ function launch_time = launchTime(RAAN, i, loc)
     lon = loc(2);	% longitude (degrees)
     
     % Inertial Launch azimuth
-    beta = launchAzimuth(i, delta, true); 
+    beta = launchAzimuth(i, r, delta, true); 
     
     % Longitude difference between launch site and ascending node
     lambda = atand(sind(delta)*tand(beta));
