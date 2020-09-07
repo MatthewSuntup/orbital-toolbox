@@ -19,10 +19,14 @@ classdef Orbit < handle
         period_sec; % Period (seconds)
         
         a;              % Semi-major axis (m)
-        R_Perigee;      % Radius of perigee (m)
-        Alt_Perigee;    % Altitude of perigee (m)
-        R_Apogee;       % Radius of apogee (m)
         b;              % Semi-minor axis (m)
+        r_perigee;      % Radius of perigee (m)
+        r_apogee;       % Radius of apogee (m)
+        
+        %R_Perigee;      % Radius of perigee (m)
+        %Alt_Perigee;    % Altitude of perigee (m)
+        %R_Apogee;       % Radius of apogee (m)
+        
         
         path;   % Path struct
 
