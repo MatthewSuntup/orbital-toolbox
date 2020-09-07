@@ -94,6 +94,13 @@ The `Orbit.sim()` method is provided by the `Orbit` class and generates an array
 
 This resulting data is compared against the known semi-major and semi-minor axes to obtain the simulation error.
 
+The `Orbit.plotOrbit()` function provides a quick method of plotting a simulated orbit using a cartesian or polar plot.
+
+<p align = center>
+<img src="img/orbit_sim_cartesian.png?raw=true" height="300">
+<img src="img/orbit_sim_polar.png?raw=true" height="300">
+</p>
+
 #### Orbit Area
 The `Orbit.pathArea()` method simply calculates the area of the orbit using:
 
