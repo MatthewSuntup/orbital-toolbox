@@ -9,14 +9,15 @@
 </p>
 
 ## About
-A collection of MATLAB functions and classes to provide basic orbital analysis capabilities. This toolbox is intended for users seeking quick and easy calculations which may act as a starting point for mission planning, however, various assumptions render this toolbox insufficient for comprehensive mission design and analysis.
+This is a collection of MATLAB functions and classes designed to provide basic orbital analysis capabilities. This toolbox is intended for users seeking quick and easy calculations which may act as a starting point for mission planning, however, this toolbox would be insufficient for a comprehensive mission design.
 
-This README outlines some of the key features and methodologies implemented in this toolbox. Specific documentation and assumptions are outlined in the relevant function documentation found in the source code or by using the MATLAB `help` command. For examples of various use cases see the `example_usage` directory.
+This README outlines some of the key features and methodologies implemented in this toolbox. Specific documentation and assumptions are outlined in the relevant function documentation found in the source code or by using the MATLAB `help` command. For examples of various use cases see the `orbital-toolbox/example_usage/` directory.
 
 This toolbox is based on code originally developed for a University of Sydney assignment in the [Space Engineering 1 course (2017 Semester 2)](https://www.sydney.edu.au/courses/units-of-study/2020/aero/aero2705.html). The code has since been refactored for use in more general cases, while some of the original tasks are still shown as example usage.
 
 ### Contents
 - [About](#About)
+- [Installation](#Installation)
 - [Features](#Features)
   - [TLE Analysis and Orbital Parameters](#TLE-Analysis-and-Orbital-Parameters)
   - [Ground Station Visibility Analysis](#Ground-Station-Visibility-Analysis)
@@ -25,6 +26,16 @@ This toolbox is based on code originally developed for a University of Sydney as
 - [Lessons](#Lessons)
 - [Credit](#Credit)
 - [Disclaimer](#Disclaimer)
+
+## Installation
+1. Clone this repository to your local machine using one of the following:
+```
+git clone git@github.com:MatthewSuntup/orbital-toolbox.git
+git clone https://github.com/MatthewSuntup/orbital-toolbox.git
+```
+2. Navigate to the directory where you cloned the repository in MATLAB's file tree
+3. Right click on the `orbital-toolbox` directory and select `Add to Path -> Selected Folders and Subfolders`
+4. Call the desired functions in new scripts or modify the scripts in the `orbital-toolbox/example_usage/` directory
 
 ## Features
 ### TLE Analysis and Orbital Parameters
